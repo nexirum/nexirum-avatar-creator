@@ -1,0 +1,4 @@
+interface:
+  display_name: "Nexirum Avatar Creator"
+  short_description: "Create animated mascots ready for Nexirum"
+  default_prompt: "Use $create-nexirum-avatar to turn my character idea into a mascot with 14 states, validated atlases and a preview."

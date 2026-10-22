@@ -1,0 +1,86 @@
+{
+  "avatar_id": "clay-dog",
+  "name": "Clay Dog",
+  "reviewed": true,
+  "sheets": [
+    {
+      "source": "sources/states-01.png",
+      "states": [
+        "idle",
+        "thinking",
+        "listening",
+        "talking",
+        "happy",
+        "warning",
+        "sleep"
+      ],
+      "x_centers": [
+        93,
+        243.5,
+        394.5,
+        544.5,
+        693.5,
+        841.5,
+        993,
+        1143,
+        1294,
+        1446.5
+      ],
+      "y_edges": [
+        0,
+        140,
+        288,
+        423,
+        560,
+        699,
+        847,
+        1024
+      ],
+      "scale": 1.0,
+      "alpha_levels": [
+        0.08,
+        0.98
+      ]
+    },
+    {
+      "source": "sources/states-02.png",
+      "states": [
+        "error",
+        "success",
+        "wake",
+        "hello",
+        "confused",
+        "searching",
+        "working"
+      ],
+      "x_centers": [
+        95.5,
+        242,
+        394,
+        543,
+        692.5,
+        841.5,
+        988,
+        1141,
+        1292.5,
+        1441.5
+      ],
+      "y_edges": [
+        0,
+        145,
+        288,
+        427,
+        565,
+        710,
+        850,
+        1024
+      ],
+      "scale": 1.0,
+      "alpha_levels": [
+        0.08,
+        0.98
+      ]
+    }
+  ],
+  "overrides": {}
+}

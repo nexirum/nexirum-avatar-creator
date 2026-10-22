@@ -1,0 +1,93 @@
+{
+  "name": "Clay Dog",
+  "version": 1,
+  "states": {
+    "idle": {
+      "frames": 10,
+      "ms": 1200,
+      "loop": true,
+      "atlas": "idle-atlas.webp"
+    },
+    "thinking": {
+      "frames": 10,
+      "ms": 800,
+      "loop": true,
+      "atlas": "thinking-atlas.webp"
+    },
+    "listening": {
+      "frames": 10,
+      "ms": 700,
+      "loop": true,
+      "atlas": "listening-atlas.webp"
+    },
+    "talking": {
+      "frames": 10,
+      "ms": 450,
+      "loop": true,
+      "atlas": "talking-atlas.webp"
+    },
+    "happy": {
+      "frames": 10,
+      "ms": 650,
+      "loop": true,
+      "atlas": "happy-atlas.webp"
+    },
+    "warning": {
+      "frames": 10,
+      "ms": 650,
+      "loop": true,
+      "atlas": "warning-atlas.webp"
+    },
+    "sleep": {
+      "frames": 10,
+      "ms": 1200,
+      "loop": true,
+      "atlas": "sleep-atlas.webp"
+    },
+    "error": {
+      "frames": 10,
+      "ms": 700,
+      "loop": true,
+      "atlas": "error-atlas.webp"
+    },
+    "success": {
+      "frames": 10,
+      "ms": 650,
+      "loop": false,
+      "nextState": "idle",
+      "atlas": "success-atlas.webp"
+    },
+    "wake": {
+      "frames": 10,
+      "ms": 750,
+      "loop": false,
+      "nextState": "idle",
+      "atlas": "wake-atlas.webp"
+    },
+    "hello": {
+      "frames": 10,
+      "ms": 650,
+      "loop": false,
+      "nextState": "idle",
+      "atlas": "hello-atlas.webp"
+    },
+    "confused": {
+      "frames": 10,
+      "ms": 800,
+      "loop": true,
+      "atlas": "confused-atlas.webp"
+    },
+    "searching": {
+      "frames": 10,
+      "ms": 650,
+      "loop": true,
+      "atlas": "searching-atlas.webp"
+    },
+    "working": {
+      "frames": 10,
+      "ms": 550,
+      "loop": true,
+      "atlas": "working-atlas.webp"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+NEXIRUM — Clay Dog
+
+Copy the clay-dog folder into resources/avatars/ beside NexirumCompanion.exe.
+Select the mascot in Personal preferences → Appearance.
+Keep other mascots intact. Configure the spoken wake name separately.
+
+Open preview.html to try states, playback speed and backgrounds.
+The preview works locally without network, microphone or AI.
+Technical validation does not replace visual review or testing in the app.

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nexirum — Avatar preview</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#101827;color:#edf3ff;font:15px system-ui,sans-serif}main{max-width:1080px;margin:32px auto;padding:0 24px}h1{font-size:25px;margin-bottom:8px}p{color:#bfccdd;line-height:1.5}.controls,#states{display:flex;gap:9px;flex-wrap:wrap;margin:18px 0}button,select{font:inherit;border:1px solid #586981;border-radius:8px;padding:9px 13px;background:#25364e;color:white;cursor:pointer}button[aria-pressed=true]{background:#165ac2;border-color:#85c7ff}button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid #fbc859;outline-offset:3px}.stage{height:380px;border:1px solid #77849a;border-radius:14px;display:grid;place-items:center;overflow:hidden;background:white}.stage.checker{background:conic-gradient(#cbd0d6 25%,white 0 50%,#cbd0d6 0 75%,white 0);background-size:32px 32px}.sprite{width:256px;height:256px;background-repeat:no-repeat;transform:scale(1.5);transform-origin:center 75%}.range{display:flex;gap:12px;align-items:center;margin:18px 0}.range input{width:min(440px,60vw)}#metadata{font-variant-numeric:tabular-nums;color:#bfccdd}.note{font-size:13px}
+</style>
+<main><h1 id="name"></h1><p>14 states · 10 frames per state. Check expressions, cropping, transparency and transitions.</p>
+<div id="states" aria-label="States"></div>
+<div class="controls"><button id="play" type="button">Play</button>
+<select id="speed" aria-label="Speed"><option value="1">Original speed</option><option value="4">Preview 4×</option><option value="8">Preview 8×</option></select>
+<select id="background" aria-label="Background"><option value="white">White</option><option value="checker">Checkerboard</option><option value="#192635">Dark</option><option value="#ffcf58">Yellow</option><option value="#ef79b1">Pink</option><option value="#59c8ec">Blue</option></select></div>
+<div class="stage" id="stage"><div class="sprite" id="sprite" role="img" aria-label="Avatar"></div></div>
+<div class="range"><label for="frame">Frame</label><input id="frame" type="range" min="0" max="9" step="1" value="0"><span id="counter"></span></div>
+<div id="metadata"></div><p class="note">Speed changes affect this preview only. It works without a server, network, microphone or AI. Check app integration separately.</p></main>
+<script>
+'use strict';
+const avatar=__AVATAR_DATA__;
+const labels={idle:'Idle',thinking:'Thinking',listening:'Listening',talking:'Talking',happy:'Happy',warning:'Warning',sleep:'Sleep',error:'Error',success:'Success',wake:'Wake',hello:'Hello',confused:'Confused',searching:'Searching',working:'Working'};
+const states=avatar.states,sprite=document.querySelector('#sprite'),stage=document.querySelector('#stage'),slider=document.querySelector('#frame'),play=document.querySelector('#play');
+let current='idle',frame=0,running=!matchMedia('(prefers-reduced-motion: reduce)').matches,timer=null;
+document.querySelector('#name').textContent=avatar.name;
+function draw(){const s=states[current];sprite.style.backgroundImage=`url("${s.image}")`;sprite.style.backgroundPosition=`${-frame*256}px 0`;sprite.setAttribute('aria-label',`${avatar.name}: ${labels[current]||current}`);slider.max=s.frames-1;slider.value=frame;document.querySelector('#counter').textContent=`${frame+1} / ${s.frames}`;document.querySelector('#metadata').textContent=`${labels[current]||current} · ${s.ms} ms/frame · ${s.loop?'loop':'once → '+s.nextState}`;for(const b of document.querySelectorAll('[data-state]'))b.setAttribute('aria-pressed',String(b.dataset.state===current));play.textContent=running?'Pause':'Play';}
+function schedule(){clearTimeout(timer);if(!running||document.hidden)return;timer=setTimeout(()=>{const s=states[current];frame++;if(frame>=s.frames){frame=0;if(!s.loop)current=s.nextState;}draw();schedule();},states[current].ms/Number(document.querySelector('#speed').value));}
+for(const key of Object.keys(states)){const b=document.createElement('button');b.type='button';b.dataset.state=key;b.textContent=labels[key]||key;b.onclick=()=>{current=key;frame=0;draw();schedule();};document.querySelector('#states').append(b);}
+play.onclick=()=>{running=!running;draw();schedule();};slider.oninput=()=>{running=false;frame=Number(slider.value);draw();schedule();};document.querySelector('#speed').onchange=schedule;
+document.querySelector('#background').onchange=e=>{const value=e.target.value;stage.classList.toggle('checker',value==='checker');stage.style.backgroundColor=value==='checker'?'white':value;};
+document.addEventListener('visibilitychange',schedule);draw();schedule();
+</script></html>
