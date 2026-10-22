@@ -10,6 +10,12 @@ Describe a character or supply a reference image. The skill guides an image-capa
 
 New here? Follow the step-by-step [installation guide](INSTALL.md).
 
+## Download
+
+[Download the repository ZIP](https://github.com/nexirum/nexirum-avatar-creator/archive/refs/heads/main.zip), or choose **Code → Download ZIP** on GitHub, then extract it.
+
+The archive includes the creation skill, installation instructions and the ready-to-use Clay Dog example. Follow [INSTALL.md](INSTALL.md) to install the skill or the example avatar.
+
 ## Try it
 
 Install or open the skill folder [skills/create-nexirum-avatar](skills/create-nexirum-avatar) in an agent that supports skills, image generation, local file operations and Python.
