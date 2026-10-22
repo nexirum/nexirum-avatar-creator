@@ -137,7 +137,4 @@ The code, documentation and included example assets are distributed under the [M
 
 The example artwork was AI-generated; the prompts are included. This project does not require avatars made from your own inputs to use the same license. External dependencies and image-generation services retain their own terms.
 
-## Publish this repository
-
-See [PUBLISHING.md](PUBLISHING.md) for extracting the distribution ZIP and uploading the repository files to GitHub. The suggested repository name is `nexirum-avatar-creator`.
 
