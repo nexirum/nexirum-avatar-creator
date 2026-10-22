@@ -73,5 +73,4 @@ server dependencies.
 | Face or body looks transparent | Inspect the generated source. Do not remove white or black by colour to create transparency. |
 | Avatar does not appear in Nexirum | Verify the folder beside the executable and every atlas filename referenced by `animations.json`. |
 
-For GitHub upload instructions, see [PUBLISHING.md](PUBLISHING.md).
 
