@@ -5,6 +5,8 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
+import zipfile
 
 from PIL import Image, ImageDraw
 
@@ -100,11 +102,55 @@ class AvatarFormatTests(unittest.TestCase):
         end=html.index(';\nconst labels=',start)
         self.assertEqual(json.loads(html[start:end])['name'],catalog['name'])
 
+    def test_source_border_artwork_is_rejected_on_each_edge(self):
+        for box in [(0,20,8,70),(91,20,99,70),(20,0,70,8),(20,91,70,99)]:
+            with self.subTest(box=box):
+                alpha = Image.new('L',(100,100),0)
+                ImageDraw.Draw(alpha).rectangle(box,fill=255)
+                with self.assertRaisesRegex(ValueError,'image border'):
+                    tool.check_source_margins(alpha)
+
+    def test_source_margin_check_preserves_dark_and_light_surfaces(self):
+        for colour in [(0,0,0,255),(255,255,255,255)]:
+            with self.subTest(colour=colour):
+                image = Image.new('RGBA',(100,100),(0,0,0,0))
+                ImageDraw.Draw(image).rectangle((10,10,89,89),fill=colour)
+                before = image.tobytes()
+                tool.check_source_margins(image.getchannel('A'))
+                self.assertEqual(image.tobytes(),before)
+
+    def test_low_alpha_edge_haze_is_not_mistaken_for_clipped_body(self):
+        alpha = Image.new('L',(100,100),4)
+        ImageDraw.Draw(alpha).rectangle((10,10,89,89),fill=255)
+        tool.check_source_margins(alpha)
+
     def test_unsafe_folder_names_and_overwrites_are_rejected(self):
         for value in ['../escape','CON','con','lpt1','two words','cão','-bad','a--b']:
             with self.assertRaises(ValueError):tool.avatar_id(value)
         with self.assertRaisesRegex(ValueError,'Output exists'):
             tool.package_avatar(self.root,'demo',self.root)
+
+    def test_delivery_contains_the_validated_bytes_and_standalone_preview(self):
+        output = self.root/'delivery'
+        with patch.object(tool,'im_command'), patch.object(tool,'contact_sheets'):
+            result = tool.package_avatar(self.root,'demo',output)
+        self.assertEqual(result['frames'],140)
+        self.assertTrue((output/'preview.html').is_file())
+        self.assertIn('data:image/webp;base64,',(output/'preview.html').read_text(encoding='utf-8'))
+        with zipfile.ZipFile(output/'demo.zip') as archive:
+            self.assertIsNone(archive.testzip())
+            for item in self.catalog['states'].values():
+                name = item['atlas']
+                self.assertEqual(archive.read('demo/'+name),(self.root/name).read_bytes())
+        self.assertEqual(list(self.root.glob('.avatar-delivery-*')),[])
+
+    def test_failed_delivery_is_not_published_and_staging_is_removed(self):
+        output = self.root/'delivery'
+        with patch.object(tool,'im_command'), patch.object(tool,'contact_sheets',side_effect=OSError('render failed')):
+            with self.assertRaisesRegex(OSError,'render failed'):
+                tool.package_avatar(self.root,'demo',output)
+        self.assertFalse(output.exists())
+        self.assertEqual(list(self.root.glob('.avatar-delivery-*')),[])
 
 
 if __name__=='__main__':

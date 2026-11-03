@@ -13,6 +13,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import uuid
 import zipfile
 
 from PIL import Image
@@ -66,6 +67,24 @@ def im_command(mode='convert'):
     if not executable:
         raise ValueError('ImageMagick is required for packing and contact sheets.')
     return [executable]
+
+
+def check_source_margins(alpha):
+    """Check framing only; this does not establish anatomy or solid interiors."""
+    width, height = alpha.size
+    borders = {
+        'left': (0, 0, 1, height),
+        'right': (width-1, 0, width, height),
+        'top': (0, 0, width, 1),
+        'bottom': (0, height-1, width, height),
+    }
+    touched = [name for name, box in borders.items()
+               if sum(alpha.crop(box).histogram()[193:]) > 4]
+    if touched:
+        raise ValueError('Source artwork touches the ' + ', '.join(touched)
+                         + ' image border. Inspect for clipped body parts and regenerate '
+                         'with transparent margins before packing. Alpha adjustment '
+                         'cannot restore missing artwork.')
 
 
 def run_image(args, mode='convert'):
@@ -182,7 +201,11 @@ def package_avatar(folder, identifier, output, record=None):
             raise ValueError('Creation record accepts only tool, prompts, and notes.')
     im_command(); im_command('montage')
     output.parent.mkdir(parents=True, exist_ok=True)
-    stage = Path(tempfile.mkdtemp(prefix='.avatar-delivery-', dir=output.parent))
+    # Final artifacts should inherit the destination's access permissions.
+    # mkdtemp uses owner-only permissions (also on Windows with Python 3.13+),
+    # which survive rename and can leave a delivery inaccessible to its recipient.
+    stage = output.parent / f'.avatar-delivery-{uuid.uuid4().hex}'
+    stage.mkdir()
     try:
         avatar_dir = stage / identifier
         avatar_dir.mkdir()
@@ -297,6 +320,7 @@ def pack_plan(filename, output, record=None):
                 command += ['-channel', 'A', '-level', f'{lo*100}%,{hi*100}%', '+channel']
             run_image(command + [normalized])
             with Image.open(normalized) as image:
+                check_source_margins(image.getchannel('A'))
                 alpha = np.array(image.getchannel('A'))
             if alpha.min() > 0 or alpha.max() < 240:
                 raise ValueError('Source alpha is not suitable; inspect or repair the artwork.')
