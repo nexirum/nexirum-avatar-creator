@@ -4,6 +4,11 @@ Create a custom desktop mascot with AI, then prepare its animations for **Nexiru
 
 Describe a character or supply a reference image. The skill guides an image-capable agent through character design, 14 animation states, transparent WebP atlases, visual review and an installable package.
 
+A text description is enough. The complete skill folder contains the format,
+animation catalog, state behaviours, preview template and packing tools. It works
+without the example dog, a previous avatar, an existing animations.json, the
+Nexirum source code or earlier conversations.
+
 <img src="examples/clay-dog/sources/reference.png" width="220" alt="A friendly honey-coloured clay dog with expressive floppy ears">
 
 **Open source · MIT license · Python tools · No Node.js**
@@ -20,11 +25,15 @@ The archive includes the creation skill, installation instructions and the ready
 
 Install or open the skill folder [skills/create-nexirum-avatar](skills/create-nexirum-avatar) in an agent that supports skills, image generation, local file operations and Python.
 
-For a Codex setup using its default local skills directory, copy the complete `create-nexirum-avatar` folder into `~/.codex/skills/`. On Windows, that is the `.codex/skills/` directory inside your user profile. If your host has a skill import screen, use that instead. Keep all scripts, references and assets together.
+For a current Codex setup, copy the complete `create-nexirum-avatar` folder into
+`~/.agents/skills/`. On Windows, that is `%USERPROFILE%\.agents\skills\`.
+If your host has a skill import screen, use that instead. Keep all scripts,
+references and assets together. Codex detects changes automatically; restart it
+if the skill does not appear. See the [official skill documentation](https://learn.chatgpt.com/docs/build-skills).
 
 Then ask:
 
-> Use $create-nexirum-avatar to create a friendly clay-style dog with expressive floppy ears. Prepare all 14 states, a preview and a package for Nexirum.
+> Use $create-nexirum-avatar to create a friendly Christmas reindeer in a handmade clay style, with a preview and an installable Nexirum package.
 
 Or:
 
@@ -35,6 +44,9 @@ If your agent does not discover skills automatically, ask it to read [SKILL.md](
 The skill does not bundle an image model or a paid API client. New artwork requires an image-generation capability in the host. Generation availability and charges depend on that host. Existing artwork can be checked and packaged locally.
 
 ## Included example
+
+This is an optional demonstration. You do not need to download or install it to
+create a different character; the skill generates its own reference from your idea.
 
 The [Clay Dog example](examples/clay-dog) contains:
 
@@ -128,6 +140,17 @@ The example's automatic report records technical checks. The separate [verificat
 ```sh
 python skills/create-nexirum-avatar/scripts/test_avatar_tool.py
 ```
+
+With all packing dependencies installed, also run the isolated integration test:
+
+```bash
+python skills/create-nexirum-avatar/scripts/test_standalone.py
+```
+
+It copies only the skill folder and builds a complete package from synthetic test
+inputs, without repository examples, a pre-existing catalog or app files. It checks
+the real plan/pack/check pipeline, palette transparency, preview and ZIP. It does
+not evaluate AI artwork or replace testing in Nexirum.
 
 The tests use synthetic fixtures and make no AI or network calls. See [CONTRIBUTING.md](CONTRIBUTING.md).
 

@@ -1,45 +1,23 @@
 # Installation
 
-## A. Use the included dog in Nexirum
+## A. Install the creation skill in your AI agent
 
-No Python or AI service is needed to install an already-created avatar.
-
-1. Extract the repository ZIP.
-2. Find `examples/clay-dog/clay-dog/`.
-3. Locate the folder containing `NexirumCompanion.exe` on your Windows computer.
-4. Create `resources/avatars/` there if it does not exist.
-5. Copy the entire `clay-dog` folder into `resources/avatars/`.
-
-The final catalog location must be:
-
-```text
-resources/avatars/clay-dog/animations.json
-```
-
-All 14 WebP files must sit beside that JSON file. Avoid an extra nested
-`clay-dog/clay-dog/` folder.
-
-6. Open **Personal preferences → Appearance** in Nexirum and select **Clay Dog**.
-7. Configure the spoken wake name separately, if you use voice activation.
-
-Keep existing avatars intact. If the new avatar is not listed, check the folder
-location and catalog first, then quit and reopen the app.
-
-To preview without installing, open `examples/clay-dog/preview.html` in a browser
-after downloading the files. It works offline.
-
-## B. Install the creation skill in your AI agent
+Install only the complete skill folder. The repository's example avatar is
+optional: a short character description is enough to start a new creation.
 
 1. Find `skills/create-nexirum-avatar/`.
 2. Import or copy that **complete folder** into your agent's skills location.
    Do not copy only `SKILL.md`.
-3. For a Codex setup using its default local directory, place it under
-   `.codex/skills/` inside your user profile. On Windows, browse to your user
-   folder and open or create that path.
-4. Start a new agent turn/session so it can discover the skill.
+3. For a current Codex setup, place it under `.agents/skills/` inside your user
+   profile. On Windows, paste `%USERPROFILE%\.agents\skills\` into File Explorer
+   and create that path if it does not exist. The final entrypoint must be
+   `%USERPROFILE%\.agents\skills\create-nexirum-avatar\SKILL.md`, with `assets`,
+   `references` and `scripts` beside it.
+4. Codex detects installed skills automatically. If it does not appear on the
+   next turn, restart Codex. See the [official skill documentation](https://learn.chatgpt.com/docs/build-skills).
 5. Ask:
 
-> Use $create-nexirum-avatar to create a friendly clay-style cat. Prepare all 14 states, a preview and the Nexirum avatar package.
+> Use $create-nexirum-avatar to create a friendly clay-style cat, with a preview and an installable Nexirum package.
 
 If the host does not discover the skill, point it directly at
 `skills/create-nexirum-avatar/SKILL.md`.
@@ -48,7 +26,15 @@ The agent needs image generation to create new artwork and local Python/file
 tools to prepare the package. A text-only agent cannot generate the images.
 The skill does not include an image model or API credentials.
 
-## C. Prepare local packing tools
+The skill creates its own character reference, state sheets, animations.json,
+preview and package. You do not need an existing avatar, sample images, JSON
+files, app source code or a previous chat. The bundled catalog specifies all
+14 states, frame counts, timings and transitions.
+
+For future updates, replace the contents of this same installed skill folder with
+the complete new version. Updating GitHub alone does not update a downloaded copy.
+
+## B. Prepare local packing tools
 
 Only needed on the computer or agent environment that builds avatar packages;
 these tools do not need to be installed on the Nexirum client just to use a mascot.
@@ -60,6 +46,24 @@ these tools do not need to be installed on the Nexirum client just to use a masc
 Follow the Windows or Linux/macOS commands in [README.md](README.md#local-tools).
 Install dependencies in a separate virtual environment; do not change Nexirum's
 server dependencies.
+
+## C. Install a completed avatar in Nexirum
+
+No Python or AI service is needed on the computer that only uses the finished avatar.
+
+1. Extract the delivered avatar ZIP and find the avatar folder containing
+   `animations.json` and its 14 WebP files.
+2. Copy that entire folder into `resources/avatars/` beside `NexirumCompanion.exe`.
+   Keep the JSON and WebPs together, without adding an extra nested avatar folder.
+3. Select the avatar in **Personal preferences → Appearance**.
+
+Open the delivered `preview.html` in a browser to inspect it without installing
+the app; it works offline. Keep existing avatars intact. If the new avatar is not
+listed, check its location and catalog before restarting the app. Configure the
+spoken wake name separately if you use voice activation.
+
+The repository's optional demonstration can be installed the same way: copy
+`examples/clay-dog/clay-dog/` into `resources/avatars/` and select **Clay Dog**.
 
 ## Troubleshooting
 

@@ -11,6 +11,10 @@ user's language for names, explanations, and delivery instructions.
 
 ## Start
 
+- A short text idea is sufficient to create a new avatar. The installed skill
+  contains its format, state definitions, catalog and preview templates, and
+  packing tools. No previous avatar, sample JSON, repository example, app source,
+  or earlier chat is required. Resolve bundled paths relative to this SKILL.md.
 - Use the supplied idea/reference and visible preferences. Ask only when a missing
   choice materially blocks creation; otherwise choose reasonable defaults.
 - Complete reference, states, packing, and verification for full-avatar requests.
@@ -30,8 +34,11 @@ plus `montage`). Packing sheets also requires NumPy and SciPy. Validation alone
 requires Python and Pillow. No Node.js is used. Keep dependency installation
 separate from Nexirum production. Use explicit paths and command arguments.
 
-Read [the format](references/nexirum-format.md). Use `assets/animations.json` as
-the preset: 14 states, 10 frames each, preserved timings, loops, and transitions.
+Read [the format](references/nexirum-format.md) and load
+[the complete catalog](assets/animations.json) before planning states. This bundled
+file is the source of truth: 14 states, 10 frames each, preserved timings, loops,
+and transitions. The user need not restate these rules or supply animations.json.
+The packer creates it from this preset and the new avatar's display name.
 
 ## Generate artwork
 
@@ -40,11 +47,16 @@ ZIP with the local tools: never ask the image model to draw a delivery package,
 file tree, specification poster or mock preview. Text depicting a file is not a
 file, and claims printed in an image do not establish transparency or compatibility.
 
-1. Create one full-body reference with genuine transparency, a readable silhouette,
+1. If no image was supplied, design the character from the text idea and generate
+   its identity reference yourself. Choose unspecified visual details that suit
+   the brief; no sample avatar is needed. Create one full-body reference with
+   genuine transparency, a readable silhouette,
    and detail appropriate to small size. Respect the style; animals need not be
    robotic, humanoid, or dressed.
 2. Reuse this image as the identity reference for every state sheet.
-3. Read [generation guidance](references/generation.md). For a new character or a
+3. Read [generation guidance](references/generation.md) and assign a distinct
+   action and visual cue to each preset state, using its baseline behaviours
+   even when no reference exists. For a new character or a
    failed attempt, inspect a single ten-frame pilot before generating the remaining
    states. Use the two seven-row layout only when the anatomy and spacing fit it;
    smaller groups are valid. Each row contains ten ordered

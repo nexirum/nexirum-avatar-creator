@@ -303,7 +303,8 @@ def pack_plan(filename, output, record=None):
             source = (path.parent / sheet['source']).resolve()
             with Image.open(source) as original:
                 original.load()
-                if original.format not in ('PNG', 'WEBP') or getattr(original, 'is_animated', False) or 'A' not in original.getbands():
+                has_alpha = 'A' in original.getbands() or 'transparency' in original.info
+                if original.format not in ('PNG', 'WEBP') or getattr(original, 'is_animated', False) or not has_alpha:
                     raise ValueError('Source must be a static PNG/WebP with actual alpha.')
                 width, height = original.size
             copied = work / f'source-{sheet_index}{source.suffix}'
@@ -320,8 +321,11 @@ def pack_plan(filename, output, record=None):
                 command += ['-channel', 'A', '-level', f'{lo*100}%,{hi*100}%', '+channel']
             run_image(command + [normalized])
             with Image.open(normalized) as image:
-                check_source_margins(image.getchannel('A'))
-                alpha = np.array(image.getchannel('A'))
+                # ImageMagick can optimize PNG to a palette with tRNS transparency.
+                # Decode that existing transparency without keying out any RGB colour.
+                alpha_image = image.convert('RGBA').getchannel('A')
+                check_source_margins(alpha_image)
+                alpha = np.array(alpha_image)
             if alpha.min() > 0 or alpha.max() < 240:
                 raise ValueError('Source alpha is not suitable; inspect or repair the artwork.')
             centers = [number(v, 'x_centers') for v in sheet['x_centers']]

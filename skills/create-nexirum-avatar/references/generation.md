@@ -2,6 +2,13 @@
 
 ## Reference
 
+When starting from text alone, turn the brief into a compact character design:
+species/object, body arrangement, face, distinctive features, material and palette.
+Choose reasonable defaults for unspecified details and generate the reference.
+This reference is an output of the workflow, not an input the user must provide.
+Use a supplied image when there is one; avoid searching previous avatars or chats
+to fill a requirement the installed skill already defines.
+
 Define the requested species/object, personality, proportions, silhouette, style,
 materials, and palette. A show's visual style does not by itself specify its
 animal species. Preserve user-approved clothing and accessories; avoid adding
@@ -34,22 +41,33 @@ edges as well as between poses. Requested layout is not proof of actual layout.
 Reject cropped feet, hands, ears or heads; smaller groups or another canvas shape
 may be needed. Preserve accepted artwork when repairing only a failed state.
 
-| Sheet | State | Behaviour |
-|---|---|---|
-| 1 | idle | Calm breathing, brief blink, closed loop. |
-| 1 | thinking | Thoughtful head/ear movement or gaze. |
-| 1 | listening | Attentive gaze, gentle tilt, optional sound arcs. |
-| 1 | talking | Subtle mouth/beak motion and conversational gesture. |
-| 1 | happy | Joyful but restrained expression/body language. |
-| 1 | warning | Calm alert, optional amber symbol. |
-| 1 | sleep | Relaxed posture and closed eyes. |
-| 2 | error | Technical concern distinct from warning; avoid despair. |
-| 2 | success | Brief affirmative gesture, ending compatible with idle. |
-| 2 | wake | Sleep to awake, ending compatible with idle. |
-| 2 | hello | Brief greeting, ending compatible with idle. |
-| 2 | confused | Curious uncertainty, not anger. |
-| 2 | searching | Small scanning gaze/head movement. |
-| 2 | working | Concentrated activity, not irritation. |
+Use these behaviours without needing an example image. Choose the suggested cue
+when useful, or an equally legible alternative suited to the character. Symbols
+are not mandatory when the action already reads clearly. Keep one visual style
+for the chosen cues and leave room for them in every affected frame.
+
+| Sheet | State | Baseline action | Suggested distinguishing cue |
+|---|---|---|---|
+| 1 | idle | Calm breathing and a brief blink, closed loop. | Neutral pose; no status symbol. |
+| 1 | thinking | Gaze shifts up; head tilts; hand/paw to chin if appropriate. | Small thought dots or a thoughtful ear pose. |
+| 1 | listening | Alert ears/gaze; lean or turn toward a sound. | Blue sound arcs beside an ear/headset. |
+| 1 | talking | Clearly changing mouth/beak shapes and a conversational gesture. | Speech strokes beside the mouth. |
+| 1 | happy | Smile and joyful hand, ear, wing or tail motion. | Thumbs-up or a small celebratory sparkle. |
+| 1 | warning | Attentive caution gesture or upright alert posture. | Amber caution symbol. |
+| 1 | sleep | Closed eyes, relaxed posture, slow breathing. | Gently drifting Zzz. |
+| 2 | error | Concern, pause or shrug, distinct from warning. | Red error symbol; avoid despair. |
+| 2 | success | Show an affirmative gesture, then return to neutral. | Green check mark. |
+| 2 | wake | Closed to open eyes; stretch; settle awake. | Brief waking rays that disappear at the end. |
+| 2 | hello | Wave a hand/paw/wing or give a friendly bow, then settle. | Greeting gesture remains the main cue. |
+| 2 | confused | Curious head tilt and questioning gaze or open palm. | Question mark. |
+| 2 | searching | Scan left and right with gaze/head and a searching action. | Magnifier, floating if anatomy needs it. |
+| 2 | working | Visible repeated typing, tool use or another focused task. | Small laptop, tool or progress indicator. |
+
+For each row, describe the ordered motion: initial pose, anticipation, main action,
+recovery and ending. Vary the action across the ten frames, rather than relying on
+texture changes or moving only the whole sprite. Looping rows should close smoothly;
+success, wake and hello end in a pose compatible with idle. Their transition rules
+and timings come from assets/animations.json, not from this artistic cue table.
 
 Adapt anatomy: dogs can use ears/tail/body; cats can use gaze/ears/posture. Do not
 force hands or humanoid stances. Review large pose changes and sleep/wake anchors.

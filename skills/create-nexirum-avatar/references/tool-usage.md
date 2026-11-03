@@ -8,6 +8,28 @@ separate system dependency. Install missing dependencies only in the intended
 skill/tooling environment, not in the client's Nexirum service. Validation alone
 does not need NumPy, SciPy, or ImageMagick.
 
+## Fresh installation, starting from a text idea
+
+Use only the installed skill folder and a new working/output directory. Read the
+bundled format and catalog, then check image generation and local dependencies
+before spending time on all states. A missing tool is an environment limitation;
+an existing avatar or sample JSON cannot replace that tool.
+
+1. Generate the character reference from the brief, then a ten-frame pilot and
+   the remaining state sheets following generation.md. No example files are needed.
+2. Run `plan` on those newly generated sheets using the command pattern below.
+   The paths are the new files you just created; the owl name and sample crop
+   coordinates below are illustrative, not required assets or reusable geometry.
+3. Inspect the actual image geometry, adjust anchors/scale and mark the plan reviewed.
+4. Run `pack`. It creates animations.json from the bundled preset, WebP atlases,
+   preview.html from the bundled template, contact sheets, instructions and ZIP.
+   You do not need to create a starter animations.json or obtain one from the user.
+5. Inspect the produced contact sheets and playback; deliver the actual output files
+   with the checks and any remaining limitations recorded.
+
+Keep prompts and relevant edits in a creation record using only `tool`, `prompts`
+and `notes`. Record decisions from this run rather than relying on earlier chats.
+
 ## Existing assets
 
 ```bash
@@ -85,3 +107,13 @@ before publication. Oversize fails without automatic lossy conversion/frame remo
 Static verification checks format, dimensions, nonempty cells, transparency,
 references, timings, transitions, and size. Visual/animation review and real app
 testing remain separate. Edge-touch warnings require inspection.
+
+## Maintainer check without example assets
+
+Run `python3 scripts/test_avatar_tool.py` for fast regression checks. With all
+packing dependencies available, also run `python3 scripts/test_standalone.py`.
+The latter copies only the skill into an isolated folder, makes synthetic test
+inputs, and runs the real `plan`, `pack` and `check` commands from a new workspace.
+It verifies generated catalog, 14 states of ten distinct frames, alpha, preview and
+ZIP without repository examples or an existing animations.json. This is a tooling
+integration test, not an image-generation or visual-quality evaluation.
