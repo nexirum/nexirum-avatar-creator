@@ -35,12 +35,19 @@ the preset: 14 states, 10 frames each, preserved timings, loops, and transitions
 
 ## Generate artwork
 
+Keep image-generation prompts limited to artwork. Build the preview, catalog and
+ZIP with the local tools: never ask the image model to draw a delivery package,
+file tree, specification poster or mock preview. Text depicting a file is not a
+file, and claims printed in an image do not establish transparency or compatibility.
+
 1. Create one full-body reference with genuine transparency, a readable silhouette,
    and detail appropriate to small size. Respect the style; animals need not be
    robotic, humanoid, or dressed.
 2. Reuse this image as the identity reference for every state sheet.
-3. Read [generation guidance](references/generation.md). Generate the two default
-   seven-row sheets, or smaller groups if necessary. Each row contains ten ordered
+3. Read [generation guidance](references/generation.md). For a new character or a
+   failed attempt, inspect a single ten-frame pilot before generating the remaining
+   states. Use the two seven-row layout only when the anatomy and spacing fit it;
+   smaller groups are valid. Each row contains ten ordered
    poses for one state. Keep camera, scale, lighting, anatomy, and placement stable.
 4. Request real alpha and opaque character surfaces, including dark faces and light
    fur. Exclude printed grids, labels, cast shadows, and baked checkerboards.
@@ -49,6 +56,12 @@ the preset: 14 states, 10 frames each, preserved timings, loops, and transitions
    transparency, motion, or identity consistency. Repair only demonstrated defects.
    Never duplicate a single pose to manufacture ten frames or replace a failed
    state with idle without disclosure.
+
+Preserve the approved character's face, proportions, clothing and accessories.
+A style reference does not choose the species. If the user supplies a presentation
+board, use its chosen character as an identity reference, not its cropped tiles as
+animation frames. Every frame must retain the requested full-body anatomy. Inspect
+hands, legs and feet explicitly before continuing; reject source-edge truncation.
 
 Honour explicit reference-approval requests before generating sequences. Otherwise
 inspect the reference and continue without an unnecessary confirmation round.
@@ -61,6 +74,9 @@ than rewriting the pipeline for each character.
 
 1. Run `plan`. Inspect source sheets and adjust actual row gaps and body centres.
    Generated grids often drift; uniform arithmetic is only a starting proposal.
+   Also set a uniform scale per sheet that fits complete poses in 256-pixel cells.
+   The proposed scale of 1.0 is not a fit calculation. The pilot is an intermediate
+   image review; final `plan` and `pack` require all 14 states.
 2. Set `reviewed: true` after that inspection. This is the agent's geometry check,
    not a new user-approval requirement.
 3. Run `pack`. It groups disconnected pieces by supplied centres, aligns anchors,
@@ -78,6 +94,12 @@ than rewriting the pipeline for each character.
    Simplify the artwork with the image tool or disclose the remaining limitation.
 
 Automatic checks establish file compatibility, not visual or runtime correctness.
+Treat `compatible: true` together with `visual_review_required: true` as awaiting
+visual review. Record which states and backgrounds were actually inspected, and
+any rejected or regenerated sheets. Do not claim missing limbs, interior holes or
+animation quality were automatically verified. On a failure, retain accepted
+artwork, identify the failing stage and repair that stage without redesigning the
+character. Preserve the tool's error if recovery remains blocked.
 For existing valid assets, use `check` and `package`; no generation is needed.
 
 ## Deliver
