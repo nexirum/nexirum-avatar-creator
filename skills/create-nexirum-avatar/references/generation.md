@@ -3,7 +3,9 @@
 ## Reference
 
 Define the requested species/object, personality, proportions, silhouette, style,
-materials, and palette. Avoid unrelated accessories. Generate one full-body
+materials, and palette. A show's visual style does not by itself specify its
+animal species. Preserve user-approved clothing and accessories; avoid adding
+unrelated ones. Generate one full-body
 reference and reuse it explicitly as identity input for all sequences.
 Retain the tool and prompt set in the creation record.
 
@@ -25,8 +27,12 @@ Do not draw ten unrelated poses. One-shot states end compatible with idle.
 Rows in this exact order: [insert seven behaviours below].
 ```
 
-Adapt dimensions and group count to the tool. Requested layout is not proof of
-actual layout. Use smaller groups when count or identity repeatedly drifts.
+For a new character, first inspect one ten-frame pilot row. Adapt dimensions and
+group count to the tool and body proportions. The seven-row scaffold is a layout
+option, not a requirement. Include visible transparent margins at all four outer
+edges as well as between poses. Requested layout is not proof of actual layout.
+Reject cropped feet, hands, ears or heads; smaller groups or another canvas shape
+may be needed. Preserve accepted artwork when repairing only a failed state.
 
 | Sheet | State | Behaviour |
 |---|---|---|
@@ -49,6 +55,14 @@ Adapt anatomy: dogs can use ears/tail/body; cats can use gaze/ears/posture. Do n
 force hands or humanoid stances. Review large pose changes and sleep/wake anchors.
 
 ## Review
+
+Before expanding a pilot into all states, define the visible cue for each state.
+Preserve symbols and props from a user-approved reference when they explain the
+state: for example sound arcs, an alert, a check mark, a question mark, a magnifier
+or a laptop. Match the requested style and reserve space for them inside each
+frame. Do not erase this vocabulary merely to simplify packing. Restrained motion
+does not mean indistinguishable states: review representative frames side by side
+at actual display size and ensure they communicate different behaviours.
 
 Count rows/poses; inspect identity, scale, lighting, accessories, and camera across
 sheets. View light/dark/coloured backgrounds and verify white/black surfaces remain
